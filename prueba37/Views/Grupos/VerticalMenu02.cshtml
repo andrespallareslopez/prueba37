@@ -1,0 +1,52 @@
+﻿@model IEnumerable<prueba37.Models.gesGrupo>
+
+
+<div class="menu-vertical01" id="menu-vertical02">
+    <div class="container-menu-scroll">
+        <ul class="items ">
+            
+            @foreach (var grupo in Model)
+            {
+
+
+
+                var familias = grupo.gesFamilias.ToList();
+                if (familias.Count() > 0)
+                {
+                    <li class="parent element pr">
+                        <a class='element-link gr ripple @HelperComponents.expandMenuClass("home", (string)TempData["itemMenu"]) ' href="#">
+                            @grupo.Descripcion
+                            <span class="fa fa-chevron-right push-float-right"></span>
+                        </a>
+                        <div class="sub-menu sb">
+                            @{ 
+                                int i;
+                                for (i = 0; i < familias.Count(); i++)
+                                {
+                                    var familia = familias[i];
+                                    var familiaDes = familias[i].Descripcion;
+
+                                    <a class='element-link el ripple @HelperComponents.expandSubMenuClass("/Home/List",(string)TempData["itemSubMenu"])' href='@Url.Action("IndexBy","Productos",new {CodGrupo=@grupo.CodGrupo,CodFamilia=@familia.CodFamilia })'>
+                                        @familiaDes
+                                    </a>
+                                }
+                            }
+                        </div>
+                    </li>
+                }
+                else
+                {
+                    <li class="element item itm">
+                        <a class='element-link el' href="#">
+                            @grupo.Descripcion
+                        </a>
+                    </li>
+                }
+
+            }
+                        
+</ul>
+    </div>
+    <button id="btn-slide-up" class="slide-button top"><i class="fa fa-chevron-up fa-2x"></i></button>
+    <button id="btn-slide-down" class="slide-button bottom"><i class="fa fa-chevron-down fa-2x"></i></button>
+</div>

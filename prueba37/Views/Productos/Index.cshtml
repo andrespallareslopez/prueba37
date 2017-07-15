@@ -1,0 +1,97 @@
+﻿
+@{
+    ViewBag.Title = "Index Productos";
+   
+}
+
+<div class="panel-scroll-01">
+    <div class="panel-scroll-content">
+        <div class="panel-scroll-item">
+            @Html.Partial("../_Progress01")
+        </div>
+    </div>
+    <button id="btn-slide-up" class="slide-button-panel top"><i class="fa fa-chevron-up fa-2x"></i></button>
+    <button id="btn-slide-down" class="slide-button-panel bottom"><i class="fa fa-chevron-down fa-2x"></i></button>
+</div>
+
+@section Scripts {
+   <script type="text/javascript">
+       $(function () {
+           var ruta = '@Url.Action("ListProductos","Productos")';
+           var container = "#root .main .content .panel-scroll-01 .panel-scroll-item";
+
+
+
+           getData(ruta, function (result) {
+               $(container).empty();
+               $(container).html(result);
+               var scrollPanel = new components.panelScroll({
+                   nameid: "#root ",
+                   container: ".main .content",
+                   containerComponent: ".panel-scroll-01",
+                   //scroll:".panel-scroll-content",
+                   //items:".panel-scroll-item",
+                   item: ".list-collection li"
+                   //btnup:"#btn-slide-up",
+                   //btndown:"#btn-slide-down",
+                   //fnClickElement:clickElementAccordion
+               });
+
+               scrollPanel.initevent();
+           });
+
+           $("#frmSearch").on("keydown", function (e) {
+               
+               if (!$(".form-search").hasClass("open-progress")) {
+                   $(".form-search").addClass("open-progress");
+                   $(container).empty();
+                   var progress = new components.container({
+                       //nameid: "#slidecontainer01",
+                       container: container,
+                       nametemplate: "loaders01"
+                   });
+
+               }
+           });
+           $("#frmSearch").on("keyup", debounce(function (e) {
+               //console.dir(e);
+               //console.dir($("#input-search").val());
+               //values.router.setRoute("/grupos/grupobySearch/" + $("#input-search").val());
+               ruta = '@Url.Action("ListBySearch", "Productos")' + '?cadena=' + $('#input-search').val();
+               getData(ruta, function (result) {
+                   $(container).empty();
+                   $(container).html(result);
+                   $(".form-search").removeClass("open-progress");
+               });
+
+           }, 350));
+
+           function getData(ruta, func) {
+               $.ajax({
+                   url: ruta,
+                   contentType: 'application/html;charset=utf-8',
+                   type: 'GET',
+                   datatype: 'html'
+               }).success(function (result) {
+                   func(result);
+               });
+           };
+
+           function debounce(func, wait, immediate) {
+               var timeout;
+               return function () {
+                   var context = this, args = arguments;
+                   var later = function () {
+                       timeout = null;
+                       if (!immediate) func.apply(context, args);
+                   };
+                   var callNow = immediate && !timeout;
+                   clearTimeout(timeout);
+                   timeout = setTimeout(later, wait);
+                   if (callNow) func.apply(context, args);
+               };
+           };
+
+       });
+   </script>
+}

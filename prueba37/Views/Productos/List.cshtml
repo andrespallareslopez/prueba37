@@ -1,0 +1,88 @@
+﻿
+@{
+    ViewBag.Title = "Lista Productos";
+}
+
+@Html.Partial("../_Progress01")   
+@section Scripts{
+    <script type="text/javascript" >
+        $(function () {
+            //var p1;
+
+            var ruta = '@Url.Action("ListProductos","Productos")';
+
+
+            $.ajax({
+                url: ruta,
+                contentType: 'application/html;charset=utf-8',
+                type: 'GET',
+                datatype:'html'
+            }).success(function (result) {
+                $("#root .main .content").empty();
+                $("#root .main .content").html(result);
+            });
+
+
+
+
+            //$("#root .main .content").load(ruta);
+
+            $("#frmSearch").on("keydown", function (e) {
+                if (!$(".form-search").hasClass("open-progress")) {
+                    $(".form-search").addClass("open-progress");
+                    $("#root .main .content").empty();
+                    var progress = new components.container({
+                        //nameid: "#slidecontainer01",
+                        container: "#root .main .content",
+                        nametemplate: "loaders01"
+                    });
+                   
+                }
+            });
+            $("#frmSearch").on("keyup", debounce(function (e) {
+                //console.dir(e);
+                //console.dir($("#input-search").val());
+                //values.router.setRoute("/grupos/grupobySearch/" + $("#input-search").val());
+                ruta = '@Url.Action("ListBySearch", "Productos")' + '?cadena=' + $('#input-search').val();
+                $.ajax({
+                    url:ruta ,
+                    contentType: 'application/html;charset=utf-8',
+                    type: 'GET',
+                    datatype: 'html'
+                }).success(function (result) {
+                    $("#root .main .content").empty();
+                    $("#root .main .content").html(result);
+                    $(".form-search").removeClass("open-progress");
+                });
+
+
+            }, 350));
+
+            function getData(url, func) {
+                $.ajax({
+                    url: ruta,
+                    contentType: 'application/html;charset=utf-8',
+                    type: 'GET',
+                    datatype: 'html'
+                }).success(function (result) {
+                    func(result);
+                });
+            };
+
+            function debounce(func, wait, immediate) {
+                var timeout;
+                return function () {
+                    var context = this, args = arguments;
+                    var later = function () {
+                        timeout = null;
+                        if (!immediate) func.apply(context, args);
+                    };
+                    var callNow = immediate && !timeout;
+                    clearTimeout(timeout);
+                    timeout = setTimeout(later, wait);
+                    if (callNow) func.apply(context, args);
+                };
+            };
+        });
+    </script>   
+}

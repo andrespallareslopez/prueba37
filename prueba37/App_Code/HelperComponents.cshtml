@@ -1,0 +1,25 @@
+﻿
+
+@helper expandMenuClass(string valor,String itemMenu)
+{
+
+if (valor == itemMenu)
+{
+        @: current-menu expand
+   }
+else
+{
+        @:
+   }
+}
+@helper expandSubMenuClass(string valor,String itemMenu)
+{
+if (valor == itemMenu)
+{
+        @: current-element
+}
+else
+{
+        @:
+  }
+}

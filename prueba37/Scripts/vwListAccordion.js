@@ -1,0 +1,5 @@
+﻿
+
+$(function () {
+    behaviors.listaccordion01();
+})

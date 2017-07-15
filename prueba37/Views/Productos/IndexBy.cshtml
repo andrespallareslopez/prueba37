@@ -1,0 +1,62 @@
+﻿
+@{
+    ViewBag.Title = "IndexBy";
+   
+}
+
+@Html.Partial("../_Progress01") 
+  
+@section scripts{
+    <script type="text/javascript">
+
+        $(function () {
+
+        //values.containerMain=".main main"
+        //values.screenHeight=$(values.containerMain).height();
+        //values.screenWidth=$(values.containerMain).width();   
+        var slidesp;
+        var p1;
+        /*
+        var slideContainer=new components.container({
+               nameid:"#slidecontainer01",
+               container:".wrapper.page.root .content",
+               nametemplate:"slide02"
+           });
+        */
+        var ruta = "getProductos?CodGrupo="+ @ViewBag.CodGrupo + "&CodFamilia="+ @ViewBag.CodFamilia;
+              p1=util.http.get(ruta);
+              p1.then(function(result){
+                  //resultdata=result;
+                 $(".wrapper.root .content .slide-container .slide-items").empty();
+                 //$(".wrapper.root .content .slide-container .slide-items ul").remove();  
+                 //behaviors.destroyEventsSlidePanel({});
+                 //console.dir(result);
+                 if (slidesp){
+                   console.log("objecto slide ya creado");
+                  // console.dir(slidesp.options.fncreate);
+                   slidesp.render(result,"reload"); 
+                 }else{
+                   $(".main .content").empty();
+                   var slideContainer=new components.container({
+                       nameid:"#slidecontainer01",
+                       container:".wrapper.root .content",
+                       nametemplate:"slide02"
+                   });
+                   
+                   slideContainer.create(function(options){
+                       slidesp=new components.slidePanels({
+                           container:".wrapper.root .content .slide-container .slide-items",
+                           data:result,
+                           nametemplate:"slide03"
+                       });
+                   });  
+                  
+                   
+                 }  
+              });
+            //******************************************************
+           
+        });
+    </script>
+}
+

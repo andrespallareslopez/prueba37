@@ -1,0 +1,134 @@
+﻿
+
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE-edge">
+    <meta name="Viewport" content="width=device-width,initial-scale=1">
+    <meta name="msapplication-tap-highlight" content="no" />
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+
+    <title>@ViewBag.Title</title>
+    @Styles.Render("~/bundles/css")
+
+</head>
+<body>
+    <div class="container lyt03layout02">
+        <div class="pages" data-root="03layout02">
+            @Html.Partial("../Header01")
+            <div class="main-body">
+                <aside id="menuvertical" class="menu-area">
+                    
+                   @*
+                   @Html.Partial("../VerticalMenu01")
+                   *@
+
+                    @{Html.RenderAction("getGrupos", "Grupos");}
+
+                </aside>
+                <div id="root" class="wrapper page root">
+                    <div class="nav">
+                        <nav data-behavior="navButtons03layout02">
+                            <button id="btn-toggle-left" class="nav-mobile ripple push-float-left">
+                                <i class="fa fa-bars fa-2x"></i>
+                            </button>
+
+                            <button id="btn-toggle-right" class="nav-mobile ripple push-float-right">
+                                <i class="fa fa-list fa-2x"></i>
+                            </button>
+                            <button id="btn-toggle-sign-in" class="nav-mobile ripple push-float-right">
+                                <i class="fa fa-sign-in fa-2x"></i>
+                            </button>
+                            <!--
+                    <button id="btn-toggle-left" class="nav-mobile push-float-right" >
+                        <i class="fa fa-search fa-2x" ></i>
+                    </button>
+                    -->
+                            <ul id="menuhorizontal01" class="menu-horizontal">
+                                <li class="parent element pr">
+                                    <a class="element-link gr ripple" href="#">Inicio<span class="fa fa-chevron-right push-float-right"></span></a>
+                                    <div class="sub-menu sb">
+                                        <a class="back-element bk ripple" href="#"><span class="fa fa-chevron-left push-float-left"></span>Back</a>
+                                        <a class="element-link el ripple" href='@Url.Action("Login","AdminUsr")'>Login</a>
+                                        <a class="element-link el ripple" href='@Url.Action("Register","AdminUsr")'>Registrar Usuario</a>
+                                        <a class="element-link el ripple" href='@Url.Action("List","Productos")'>Productos</a>
+                                        <a class="element-link el ripple" href='@Url.Action("Index","Productos")'>Panel Prod</a>
+                                        <a class="element-link el ripple" href="#/template5">SubLink 5</a>
+                                    </div>
+                                </li>
+                                <li class="element item itm"><a class="element-link el ripple" href="#/template6">Link 2</a></li>
+                                <li class="parent element pr">
+                                    <a class="element-link gr ripple" href="#">Link 3<span class="fa fa-chevron-right push-float-right"></span></a>
+                                    <div class="sub-menu sb">
+                                        <a class="back-element bk ripple" href="#"><span class="fa fa-chevron-left push-float-left"></span> Back</a>
+                                        <a class="element-link el ripple" href="#/template7">SubLink 1</a>
+                                        <a class="element-link el ripple" href="#/template8">SubLink 2</a>
+
+                                    </div>
+                                </li>
+                                <li class="element item itm"><a class="element-link el ripple" href="#/template12">Link 4</a></li>
+
+                            </ul>
+                            <form id="frmLogin" class="form-login form-background-1">
+                                <div class="form-background">
+                                    <div class="group">
+                                        <input type="text" required>
+                                        <span class="hightlight"></span>
+                                        <span class="bar"></span>
+                                        <label>Name</label>
+                                    </div>
+                                    <div class="group">
+                                        <input type="text" required>
+                                        <span class="hightlight"></span>
+                                        <span class="bar"></span>
+                                        <label>Email</label>
+                                    </div>
+                                    <div class="group cf">
+                                        <button class="btn-default push-float-left">
+                                            <span>Cancelar</span>
+                                        </button>
+
+                                        <button class="btn-primary push-float-right">
+                                            <span>Aceptar</span>
+                                        </button>
+
+                                    </div>
+
+                                </div>
+                            </form>
+                            <form id="frmSearch" class="form-search push-float-right">
+                                <button id="btn-form-search" class="nav-mobile btn-search ripple">
+                                    <span class="fa fa-search fa-2x"></span>
+                                </button>
+                                <button class="nav-mobile btn-progress">
+                                    <span class="fa fa-circle-o-notch fa-spin fa-2x fa-fw"></span>
+                                </button>
+                                <input id="input-search" placeholder="Search..." class="input-search" type="text" />
+                                <button id="btn-form-close" class="nav-mobile btn-search btn-search-close">
+                                    <span class="fa fa-times fa-2x"></span>
+                                </button>
+                            </form>
+                        </nav>
+                    </div>
+                    <div class="main">
+                        <main>
+                            <div class="content">
+                                    @RenderBody()
+                            </div>
+                        </main>
+                    </div>
+                    <div class="footer">
+                        <footer></footer>
+                    </div>
+                </div>
+
+            </div>    
+        </div>
+    </div>
+    @Scripts.Render("~/bundles/scripts")
+    @RenderSection("scripts",required:false)
+</body>
+</html>
